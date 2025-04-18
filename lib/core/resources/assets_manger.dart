@@ -19,4 +19,12 @@ class AssetsManager {
   static const String introScreen3 = "$base/intro_screen_3.png";
   static const String introScreen4 = "$base/intro_screen_4.png";
   static const String introScreen5 = "$base/intro_screen_5.png";
+  static const String backgroundTasbeh = "$base/Background_tasbeh.png";
+  static const String tasbeh = "$base/tasbeh.png";
+  static const String radioBackground = "assets/images/radio_background.png";
+  static const String mosque = "assets/images/mosque.png";
+  static const String soundWave = "assets/images/soundWave.png";
+  static const String timeBackground = "assets/images/backgroundTime.png";
+  static const String azkarELsabah = "assets/images/email-icon 1.png";
+  static const String azkarElmasaa = "assets/images/document-icon 1.png";
 }

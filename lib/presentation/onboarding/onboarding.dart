@@ -46,7 +46,7 @@ class Onboarding extends StatelessWidget {
      // key: introKey,
       globalBackgroundColor: ColorsManager.black,
       allowImplicitScrolling: false,
-      autoScrollDuration: 0,
+      autoScrollDuration: null,
       infiniteAutoScroll: false,
       globalHeader: Align(
         alignment: Alignment.topCenter,

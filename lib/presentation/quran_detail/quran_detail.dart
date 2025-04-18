@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:islami_app/core/resources/assets_manger.dart';
 import 'package:islami_app/core/resources/colors_manger.dart';
+
+import '../../DM/quran_detailsDM.dart';
 import '../../core/constant.dart';
+import '../main_layout/tabs/quran/widgets/most_recent_card.dart';
 
 class QuranDetail extends StatefulWidget {
   const QuranDetail({super.key});
@@ -13,12 +16,21 @@ class QuranDetail extends StatefulWidget {
 
 class _QuranDetailState extends State<QuranDetail> {
   late SuraDM arguments;
-  String surahContent = 'Loading...'; // Default text
+  late GlobalKey<MostRecentState> mostRecentKey;
+  String surahContent = 'Loading...';
+
+  @override
+  void dispose() {
+    mostRecentKey.currentState?.refreshMostRecentSuras();
+    super.dispose();
+  }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    arguments = ModalRoute.of(context)!.settings.arguments as SuraDM;
+    final args = ModalRoute.of(context)!.settings.arguments as QuranDetailsArguments;
+    arguments = args.suraDM;
+    mostRecentKey = args.mostRecentKey;
     buildSuraContent(int.parse(arguments.suraIndex));
   }
 
@@ -82,19 +94,17 @@ class _QuranDetailState extends State<QuranDetail> {
   }
 
   void buildSuraContent(int suraIndex) async {
+    String fileContent = await rootBundle.loadString('assets/files/suras/$suraIndex.txt');
+    var suraLines = fileContent.trim().split('\n');
+    List<String> surahLinesFinal = [];
 
-      String fileContent = await rootBundle.loadString('assets/files/suras/$suraIndex.txt');
-      var suraLines = fileContent.trim().split('\n');
-      List<String> surahLinesFinal = [];
+    for (int i = 0; i < suraLines.length; i++) {
+      if (suraLines[i].trim().isEmpty) continue;
+      surahLinesFinal.add('${suraLines[i].trim()} ۩${i + 1}۩');
+    }
 
-      for (int i = 0; i < suraLines.length; i++) {
-        if (suraLines[i].trim().isEmpty) continue;
-        surahLinesFinal.add('${suraLines[i].trim()} ۩${i + 1}۩');
-      }
-
-      setState(() {
-        surahContent = surahLinesFinal.join('\n\n');
-      });
-
+    setState(() {
+      surahContent = surahLinesFinal.join('\n\n');
+    });
   }
 }
